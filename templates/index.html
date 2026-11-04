@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Trang chủ - Dashboard{% endblock %}
+
+{% block content %}
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h2 class="card-title text-primary">Chào mừng đến với Hệ thống Quản lý bảo trì</h2>
+            <hr>
+            <p class="card-text">
+                Bộ khung giao diện đã được thiết lập thành công. Các thành viên khi tạo trang mới 
+                chỉ cần dùng thẻ <code>{% raw %}{% extends 'base.html' %}{% endraw %}</code> là sẽ tự động có menu bên trái.
+            </p>
+            <button class="btn btn-success">Bắt đầu làm việc</button>
+        </div>
+    </div>
+{% endblock %}
