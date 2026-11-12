@@ -1,0 +1,13 @@
+{% extends 'base.html' %}{% block content %}
+<h2>{{ 'Sửa thiết bị' if tb else 'Thêm thiết bị' }}</h2>
+<form method="post" class="card card-body" style="max-width:700px">
+<input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+<label class="form-label">Mã thiết bị</label><input class="form-control mb-3" name="ma" value="{{ tb.MaThietBi if tb else '' }}" {{ 'readonly' if tb else 'required' }}>
+<label class="form-label">Tên thiết bị</label><input class="form-control mb-3" name="ten" value="{{ tb.TenThietBi if tb else '' }}" required>
+<label class="form-label">Số serial</label><input class="form-control mb-3" name="serial" value="{{ tb.SerialNumber or '' if tb else '' }}">
+<label class="form-label">Ngày mua</label><input type="date" class="form-control mb-3" name="ngay" value="{{ tb.NgayMua if tb else '' }}" required>
+<label class="form-label">Vị trí</label><input class="form-control mb-3" name="vitri" value="{{ tb.ViTri or '' if tb else '' }}">
+<div class="d-flex justify-content-between"><label class="form-label">Danh mục</label><a href="{{ url_for('danhmuc.them') }}" target="_blank" rel="noopener">+ Tạo danh mục</a></div><select name="danhmuc" class="form-select mb-3" required>{% for x in danhmuc %}<option value="{{ x.MaDanhMuc }}" {{ 'selected' if tb and tb.MaDanhMuc == x.MaDanhMuc else '' }}>{{ x.TenDanhMuc }}</option>{% endfor %}</select>
+<div class="d-flex justify-content-between"><label class="form-label">Phòng ban</label><a href="{{ url_for('phongban.them') }}" target="_blank" rel="noopener">+ Tạo phòng ban</a></div><select name="phongban" class="form-select mb-3" required>{% for x in phongban %}<option value="{{ x.MaPhongBan }}" {{ 'selected' if tb and tb.MaPhongBan == x.MaPhongBan else '' }}>{{ x.TenPhongBan }}</option>{% endfor %}</select>
+<p class="text-muted small">Nếu vừa thêm danh mục/phòng ban ở tab mới, hãy tải lại trang này trước khi chọn.</p><div><button class="btn btn-success">Lưu</button><a class="btn btn-secondary" href="{{ url_for('thietbi.danh_sach') }}">Hủy</a></div></form>
+{% endblock %}

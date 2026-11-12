@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}{{ 'Sửa danh mục' if danhmuc else 'Thêm danh mục' }}{% endblock %}
+{% block content %}
+<h2 class="mb-3">{{ 'Sửa danh mục' if danhmuc else 'Thêm danh mục' }}</h2>
+<form method="post" class="card shadow-sm p-4" style="max-width:650px"><input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+<label class="form-label" for="ma">Mã danh mục <span class="text-danger">*</span></label>
+<input class="form-control mb-3" id="ma" name="ma" maxlength="20" value="{{ danhmuc.MaDanhMuc if danhmuc else request.form.get('ma','') }}" {% if danhmuc %}readonly{% else %}required{% endif %}>
+<label class="form-label" for="ten">Tên danh mục <span class="text-danger">*</span></label>
+<input class="form-control mb-3" id="ten" name="ten" maxlength="100" value="{{ request.form.get('ten',danhmuc.TenDanhMuc if danhmuc else '') }}" required placeholder="Ví dụ: Máy CNC">
+{% if extended %}
+<label class="form-label" for="mota">Mô tả</label><textarea id="mota" name="mota" maxlength="500" class="form-control mb-3" rows="3">{{ request.form.get('mota',danhmuc.MoTa or '' if danhmuc else '') }}</textarea>
+<label class="form-label" for="trangthai">Trạng thái</label><select name="trangthai" id="trangthai" class="form-select mb-3">{% set selected = request.form.get('trangthai',danhmuc.TrangThai if danhmuc else 'Đang sử dụng') %}<option value="Đang sử dụng" {% if selected == 'Đang sử dụng' %}selected{% endif %}>Đang sử dụng</option><option value="Ngừng sử dụng" {% if selected == 'Ngừng sử dụng' %}selected{% endif %}>Ngừng sử dụng</option></select>
+{% endif %}
+<div class="d-flex gap-2"><button class="btn btn-success">Lưu</button><a class="btn btn-secondary" href="{{ url_for('danhmuc.danh_sach') }}">Hủy</a></div>
+</form>
+{% endblock %}

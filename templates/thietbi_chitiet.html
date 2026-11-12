@@ -1,0 +1,7 @@
+{% extends 'base.html' %}{% block content %}
+<h2>{{ tb.TenThietBi }} ({{ tb.MaThietBi }})</h2>
+<p>Serial: {{ tb.SerialNumber or '—' }} | Vị trí: {{ tb.ViTri or '—' }} | Trạng thái: {{ tb.TrangThai }}</p>
+<h4>Lịch sử phiếu bảo trì</h4><table class="table"><thead><tr><th>Mã phiếu</th><th>Ngày tạo</th><th>Mô tả</th><th>Trạng thái</th><th>Kết quả</th></tr></thead><tbody>
+{% for p in phieu %}<tr><td>{{ p.MaPhieu }}</td><td>{{ p.NgayTao }}</td><td>{{ p.MoTaLoi }}</td><td>{{ p.TrangThai }}</td><td>{{ p.KetQua or '—' }}</td></tr>{% else %}<tr><td colspan="5">Chưa có lịch sử</td></tr>{% endfor %}
+</tbody></table><a href="{{ url_for('thietbi.danh_sach') }}">Quay lại</a>
+{% endblock %}

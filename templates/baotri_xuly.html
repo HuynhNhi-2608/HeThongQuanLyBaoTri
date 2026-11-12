@@ -1,0 +1,13 @@
+{% extends 'base.html' %}{% block content %}
+<h2>Xử lý phiếu #{{ phieu.MaPhieu }}</h2><p><strong>Thiết bị:</strong> {{ phieu.MaThietBi }} | <strong>Trạng thái:</strong> {{ phieu.TrangThai }}</p>
+<p><strong>Mô tả lỗi:</strong> {{ phieu.MoTaLoi }}</p>
+{% if phieu.TrangThai != 'Đã đóng' %}
+<form method="post" class="card card-body" style="max-width:700px">
+<input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+<label class="form-label">Trạng thái kế tiếp</label><select name="trangthai" class="form-select mb-3">
+{% for x in trangthai %}{% if loop.index0 == trangthai.index(phieu.TrangThai)+1 %}<option value="{{ x }}">{{ x }}</option>{% endif %}{% endfor %}</select>
+<label class="form-label">Kỹ thuật viên</label><select name="kythuat" class="form-select mb-3"><option value="">-- Chọn kỹ thuật viên --</option>
+{% for t in kythuat %}<option value="{{ t.MaNguoiDung }}" {{ 'selected' if phieu.MaKyThuatVien == t.MaNguoiDung else '' }}>{{ t.HoTen }}</option>{% endfor %}</select>
+<label class="form-label">Kết quả sửa chữa (khi hoàn thành)</label><textarea name="ketqua" class="form-control mb-3">{{ phieu.KetQua or '' }}</textarea>
+<button class="btn btn-success">Cập nhật</button></form>{% else %}<p>Phiếu đã đóng, chỉ có thể xem.</p>{% endif %}
+<a href="{{ url_for('baotri.danh_sach') }}">Quay lại</a>{% endblock %}

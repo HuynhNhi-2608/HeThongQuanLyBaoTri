@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}{{ 'Sửa phòng ban' if phongban else 'Thêm phòng ban' }}{% endblock %}
+{% block content %}
+<h2 class="mb-3">{{ 'Sửa phòng ban' if phongban else 'Thêm phòng ban' }}</h2>
+<form method="post" class="card shadow-sm p-4" style="max-width:650px"><input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+<label class="form-label" for="ma">Mã phòng ban <span class="text-danger">*</span></label>
+<input id="ma" name="ma" maxlength="20" class="form-control mb-3" value="{{ phongban.MaPhongBan if phongban else request.form.get('ma','') }}" {% if phongban %}readonly{% else %}required{% endif %}>
+<label class="form-label" for="ten">Tên phòng ban <span class="text-danger">*</span></label>
+<input id="ten" name="ten" maxlength="100" class="form-control mb-3" required value="{{ request.form.get('ten', phongban.TenPhongBan if phongban else '') }}" placeholder="Ví dụ: Xưởng cơ khí">
+<div class="d-flex gap-2"><button class="btn btn-success">Lưu</button><a href="{{ url_for('phongban.danh_sach') }}" class="btn btn-secondary">Hủy</a></div>
+</form>
+{% endblock %}
