@@ -1,17 +1,12 @@
 {% extends 'base.html' %}
-
-{% block title %}Trang chủ - Dashboard{% endblock %}
-
+{% block title %}Trang chủ - Quản lý bảo trì{% endblock %}
 {% block content %}
-    <div class="card shadow-sm">
-        <div class="card-body">
-            <h2 class="card-title text-primary">Chào mừng đến với Hệ thống Quản lý bảo trì</h2>
-            <hr>
-            <p class="card-text">
-                Bộ khung giao diện đã được thiết lập thành công. Các thành viên khi tạo trang mới 
-                chỉ cần dùng thẻ <code>{% raw %}{% extends 'base.html' %}{% endraw %}</code> là sẽ tự động có menu bên trái.
-            </p>
-            <button class="btn btn-success">Bắt đầu làm việc</button>
-        </div>
-    </div>
+<h2 class="mb-2">Hệ thống quản lý bảo trì</h2>
+<p class="text-muted">Khu vực quản lý thiết bị, phòng ban, danh mục và phiếu bảo trì.</p>
+<div class="row g-3">
+  <div class="col-md-6"><div class="card shadow-sm h-100"><div class="card-body"><h5>Quản lý thiết bị</h5><p>Danh sách, tìm kiếm, thêm, sửa, khóa/mở và xem lịch sử bảo trì.</p><a class="btn btn-primary" href="{{ url_for('thietbi.danh_sach') }}">Xem thiết bị</a></div></div></div>
+  <div class="col-md-6"><div class="card shadow-sm h-100"><div class="card-body"><h5>Phiếu bảo trì</h5><p>Lập phiếu báo hỏng, phân công, cập nhật tiến độ và kết quả.</p><a class="btn btn-primary" href="{{ url_for('baotri.danh_sach') }}">Xem phiếu</a></div></div></div>
+  <div class="col-md-6"><div class="card shadow-sm h-100"><div class="card-body"><h5>Danh mục thiết bị</h5><p>Quản lý nhóm máy móc và thiết bị.</p><a class="btn btn-outline-primary" href="{{ url_for('danhmuc.danh_sach') }}">Xem danh mục</a></div></div></div>
+  <div class="col-md-6"><div class="card shadow-sm h-100"><div class="card-body"><h5>Quản lý phòng ban</h5><p>Khai báo các phòng ban, phân xưởng sử dụng thiết bị.</p><a class="btn btn-outline-primary" href="{{ url_for('phongban.danh_sach') }}">Xem phòng ban</a></div></div></div>
+</div>
 {% endblock %}

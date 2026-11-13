@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block title %}Danh mục thiết bị{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3"><div><h2 class="mb-1">Danh mục thiết bị</h2><p class="text-muted mb-0">Phân nhóm máy móc và thiết bị trong doanh nghiệp.</p></div><a class="btn btn-primary" href="{{ url_for('danhmuc.them') }}">+ Thêm danh mục</a></div>
+<form method="get" class="d-flex gap-2 mb-3"><input class="form-control" style="max-width:340px" name="q" value="{{ q }}" placeholder="Tìm mã hoặc tên danh mục"><button class="btn btn-outline-primary">Tìm</button><a class="btn btn-outline-secondary" href="{{ url_for('danhmuc.danh_sach') }}">Xóa lọc</a></form>
+<div class="card shadow-sm"><div class="table-responsive"><table class="table table-hover align-middle mb-0"><thead class="table-light"><tr><th>Mã</th><th>Tên danh mục</th>{% if extended %}<th>Mô tả</th><th>Trạng thái</th>{% endif %}<th>Số thiết bị</th><th class="text-end">Thao tác</th></tr></thead><tbody>
+{% for dm in rows %}<tr><td><strong>{{ dm.MaDanhMuc }}</strong></td><td>{{ dm.TenDanhMuc }}</td>{% if extended %}<td>{{ dm.MoTa or '—' }}</td><td>{{ dm.TrangThai }}</td>{% endif %}<td>{{ dm.SoThietBi }}</td><td class="text-end"><a class="btn btn-sm btn-outline-primary" href="{{ url_for('danhmuc.sua',ma=dm.MaDanhMuc) }}">Sửa</a><form method="post" class="d-inline" action="{{ url_for('danhmuc.xoa',ma=dm.MaDanhMuc) }}" onsubmit="return confirm('Bạn chắc chắn muốn xóa danh mục?')"><input type="hidden" name="csrf_token" value="{{ csrf_token }}"><button class="btn btn-sm btn-outline-danger" {% if dm.SoThietBi %}disabled title="Danh mục đang có thiết bị"{% endif %}>Xóa</button></form></td></tr>
+{% else %}<tr><td colspan="{{ 7 if extended else 5 }}" class="text-center text-muted py-4">Chưa có danh mục phù hợp.</td></tr>{% endfor %}
+</tbody></table></div></div>
+{% endblock %}

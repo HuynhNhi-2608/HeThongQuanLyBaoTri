@@ -1,21 +1,32 @@
-import pyodbc
+
 import os
+import pyodbc
 from dotenv import load_dotenv
 
-# Tải các biến môi trường từ file .env
 load_dotenv()
 
 def get_db_connection():
-    try:
-        conn_str = (
-            "DRIVER={ODBC Driver 17 for SQL Server};"
-            f"SERVER={os.getenv('DB_SERVER')};"
-            f"DATABASE={os.getenv('DB_NAME')};"
+    server = os.getenv("DB_SERVER")
+    database = os.getenv("DB_NAME")
+    driver = os.getenv(
+        "DB_DRIVER",
+        "ODBC Driver 17 for SQL Server"
+    )
+    auth = os.getenv("DB_AUTH", "windows")
+
+    conn_str = (
+        f"DRIVER={{{driver}}};"
+        f"SERVER={server};"
+        f"DATABASE={database};"
+        "TrustServerCertificate=yes;"
+    )
+
+    if auth == "windows":
+        conn_str += "Trusted_Connection=yes;"
+    else:
+        conn_str += (
             f"UID={os.getenv('DB_USER')};"
-            f"PWD={os.getenv('DB_PASS')}"
+            f"PWD={os.getenv('DB_PASS')};"
         )
-        conn = pyodbc.connect(conn_str)
-        return conn
-    except Exception as e:
-        print(f"Lỗi kết nối Cơ sở dữ liệu: {e}")
-        return None
+
+    return pyodbc.connect(conn_str, timeout=5)

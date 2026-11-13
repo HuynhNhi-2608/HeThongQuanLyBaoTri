@@ -1,0 +1,9 @@
+{% extends 'base.html' %}{% block content %}
+<h2>Lập phiếu báo hỏng</h2><form method="post" class="card card-body" style="max-width:700px">
+<input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+<label class="form-label">Thiết bị</label><select name="thietbi" class="form-select mb-3" required>{% for t in thietbi %}<option value="{{ t.MaThietBi }}">{{ t.MaThietBi }} - {{ t.TenThietBi }}</option>{% endfor %}</select>
+<label class="form-label">Người yêu cầu</label><select name="nguoi" class="form-select mb-3" required>{% for n in nhanvien %}<option value="{{ n.MaNguoiDung }}">{{ n.HoTen }}</option>{% endfor %}</select>
+<label class="form-label">Mức ưu tiên</label><select name="uutien" class="form-select mb-3"><option>Thấp</option><option selected>Trung bình</option><option>Cao</option></select>
+<label class="form-label">Mô tả lỗi</label><textarea class="form-control mb-3" name="mota" required maxlength="1000"></textarea>
+<div><button class="btn btn-success">Lưu phiếu</button><a class="btn btn-secondary" href="{{ url_for('baotri.danh_sach') }}">Hủy</a></div></form>
+{% endblock %}

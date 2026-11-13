@@ -1,0 +1,12 @@
+{% extends 'base.html' %}{% block content %}
+<div class="d-flex justify-content-between"><h2>Danh sách thiết bị</h2><a class="btn btn-primary" href="{{ url_for('thietbi.them') }}">+ Thêm thiết bị</a></div>
+<form method="get" class="d-flex gap-2 mt-3"><input class="form-control" style="max-width:340px" name="q" value="{{ q }}" placeholder="Tìm mã, tên, serial"><button class="btn btn-outline-primary">Tìm</button><a class="btn btn-outline-secondary" href="{{ url_for('thietbi.danh_sach') }}">Xóa lọc</a></form>
+<div class="table-responsive"><table class="table table-striped bg-white mt-3"><thead><tr><th>Mã</th><th>Tên</th><th>Danh mục</th><th>Phòng ban</th><th>Ngày mua</th><th>Trạng thái</th><th>Thao tác</th></tr></thead><tbody>
+{% for tb in rows %}<tr><td>{{ tb.MaThietBi }}</td><td>{{ tb.TenThietBi }}</td><td>{{ tb.TenDanhMuc }}</td><td>{{ tb.TenPhongBan }}</td><td>{{ tb.NgayMua }}</td><td>{{ tb.TrangThai }}</td><td>
+<a href="{{ url_for('thietbi.chi_tiet',ma=tb.MaThietBi) }}">Chi tiết</a> · <a href="{{ url_for('thietbi.sua',ma=tb.MaThietBi) }}">Sửa</a>
+{% if tb.TrangThai != 'Đã thanh lý' %}<form method="post" action="{{ url_for('thietbi.doi_trang_thai',ma=tb.MaThietBi) }}" class="d-inline">
+<input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+<input type="hidden" name="trangthai" value="{{ 'Đang hoạt động' if tb.TrangThai == 'Ngừng hoạt động' else 'Ngừng hoạt động' }}">
+<button class="btn btn-link btn-sm" onclick="return confirm('Xác nhận thay đổi trạng thái?')">{{ 'Mở lại' if tb.TrangThai == 'Ngừng hoạt động' else 'Khóa' }}</button></form>{% endif %}
+</td></tr>{% else %}<tr><td colspan="7">Chưa có thiết bị</td></tr>{% endfor %}</tbody></table></div>
+{% endblock %}

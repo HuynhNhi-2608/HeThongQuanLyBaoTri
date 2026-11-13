@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}Quản lý phòng ban{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+  <div><h2 class="mb-1">Quản lý phòng ban</h2><p class="text-muted mb-0">Khai báo phòng ban hoặc phân xưởng sử dụng thiết bị.</p></div>
+  <a class="btn btn-primary" href="{{ url_for('phongban.them') }}">+ Thêm phòng ban</a>
+</div>
+<form method="get" class="d-flex gap-2 mb-3"><input name="q" value="{{ q }}" class="form-control" style="max-width:340px" placeholder="Tìm mã hoặc tên phòng ban"><button class="btn btn-outline-primary">Tìm</button><a href="{{ url_for('phongban.danh_sach') }}" class="btn btn-outline-secondary">Xóa lọc</a></form>
+<div class="card shadow-sm"><div class="table-responsive"><table class="table table-hover align-middle mb-0"><thead class="table-light"><tr><th>Mã phòng ban</th><th>Tên phòng ban</th><th>Số thiết bị</th><th class="text-end">Thao tác</th></tr></thead><tbody>
+{% for pb in rows %}<tr><td><strong>{{ pb.MaPhongBan }}</strong></td><td>{{ pb.TenPhongBan }}</td><td>{{ pb.SoThietBi }}</td><td class="text-end"><a class="btn btn-sm btn-outline-primary" href="{{ url_for('phongban.sua',ma=pb.MaPhongBan) }}">Sửa</a><form class="d-inline" method="post" action="{{ url_for('phongban.xoa',ma=pb.MaPhongBan) }}" onsubmit="return confirm('Xóa phòng ban này?')"><input type="hidden" name="csrf_token" value="{{ csrf_token }}"><button class="btn btn-sm btn-outline-danger" {% if pb.SoThietBi %}disabled title="Phòng ban đang có thiết bị"{% endif %}>Xóa</button></form></td></tr>
+{% else %}<tr><td colspan="4" class="text-center text-muted py-4">Chưa có phòng ban phù hợp.</td></tr>{% endfor %}
+</tbody></table></div></div>
+{% endblock %}

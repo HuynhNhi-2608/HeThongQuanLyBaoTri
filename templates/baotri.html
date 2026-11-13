@@ -1,0 +1,6 @@
+{% extends 'base.html' %}{% block content %}
+<div class="d-flex justify-content-between"><h2>Phiếu bảo trì</h2><a class="btn btn-primary" href="{{ url_for('baotri.them') }}">+ Lập phiếu</a></div>
+<form method="get" class="d-flex gap-2 mt-3"><select name="trangthai" class="form-select" style="max-width:290px"><option value="">Tất cả trạng thái</option>{% for tt in trangthai %}<option value="{{ tt }}" {{ 'selected' if loc==tt else '' }}>{{ tt }}</option>{% endfor %}</select><button class="btn btn-outline-primary">Lọc</button></form>
+<div class="table-responsive"><table class="table table-striped bg-white mt-3"><thead><tr><th>Mã</th><th>Thiết bị</th><th>Người yêu cầu</th><th>Kỹ thuật viên</th><th>Ưu tiên</th><th>Trạng thái</th><th>Thao tác</th></tr></thead><tbody>
+{% for p in rows %}<tr><td>{{ p.MaPhieu }}</td><td>{{ p.TenThietBi }}</td><td>{{ p.TenNguoiYeuCau }}</td><td>{{ p.TenKyThuatVien or 'Chưa phân công' }}</td><td>{{ p.MucDoUuTien }}</td><td>{{ p.TrangThai }}</td><td><a href="{{ url_for('baotri.xu_ly',ma=p.MaPhieu) }}">Xử lý</a></td></tr>
+{% else %}<tr><td colspan="7">Chưa có phiếu</td></tr>{% endfor %}</tbody></table></div>{% endblock %}
